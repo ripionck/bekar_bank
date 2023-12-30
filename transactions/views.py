@@ -15,9 +15,8 @@ from django.db.models import Sum
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+
 # Create your views here.
-
-
 def send_transaction_email(user, amount, subject, template):
     message = render_to_string(template, {
         'user': user,
@@ -71,8 +70,8 @@ class DepositMoneyView(TransactionCreateMixin):
         messages.success(
             self.request, f'{"{:,.2f}".format(float(amount))} $ was deposited to your account successfully.'
         )
-        # send_transaction_email(self.request.user, amount,
-        #                        "Deposite Message", "transactions/deposite_email.html")
+        send_transaction_email(self.request.user, amount,
+                               "Deposite Message", "transactions/deposite_email.html")
 
         return super().form_valid(form)
 
@@ -98,8 +97,8 @@ class WithdrawMoneyView(TransactionCreateMixin):
             self.request,
             f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
         )
-        # send_transaction_email(self.request.user, amount,
-        #                        "Withdrawl Message", "transactions/withdrawal_email.html")
+        send_transaction_email(self.request.user, amount,
+                               "Withdrawl Message", "transactions/withdrawal_email.html")
         return super().form_valid(form)
 
 
@@ -122,8 +121,8 @@ class LoanRequestView(TransactionCreateMixin):
             return HttpResponse("You have crossed the loan limit")
         messages.success(
             self.request, f'Loan request for {"{:,.2f}".format(float(amount))}$ submitted successfully')
-        # send_transaction_email(self.request.user, amount,
-        #                        "Loan Request Message", "transactions/loan_request.html")
+        send_transaction_email(self.request.user, amount,
+                               "Loan Request Message", "transactions/loan_request.html")
         return super().form_valid(form)
 
 
