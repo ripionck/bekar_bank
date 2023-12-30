@@ -1,5 +1,3 @@
-asgiref
-astroid
 autopep8
 certifi
 click
@@ -8,6 +6,7 @@ crispy-bootstrap5
 cssbeautifier
 dill
 distlib
+dj-database-url
 Django
 django-crispy-forms
 django-environ
@@ -37,6 +36,7 @@ pipenv
 platformdirs
 pluggy
 psycopg2
+psycopg2-binary
 pyarrow
 PyAutoGUI
 pycodestyle
@@ -64,6 +64,7 @@ toml
 tomli
 tomlkit
 tqdm
+typing_extensions
 tzdata
 ujson
 virtualenv
