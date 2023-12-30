@@ -207,18 +207,30 @@ class TransferMoneyView(TransactionCreateMixin):
     title = 'Transfer Money'
 
     def get_initial(self):
+        # Set the initial value for the 'transaction_type' field in the form to TRANSFER.
         initial = {'transaction_type': TRANSFER}
         return initial
 
     def form_valid(self, form):
+        # Retrieve the amount and receiver's account number from the form.
         amount = form.cleaned_data.get('amount')
-        beneficiary_account = UserBankAccount.objects.get(
+        receiver_account = UserBankAccount.objects.get(
             account_no=form.cleaned_data.get('account_no'))
+        # Update the balances of the sender and receiver accounts.
         self.request.user.account.balance -= amount
-        beneficiary_account.balance += amount
-        print(beneficiary_account.account_no)
-        beneficiary_account.save(update_fields=['balance'])
+        receiver_account.balance += amount
+        print(receiver_account.account_no)
+        # Save the updated balances to the database.
+        receiver_account.save(update_fields=['balance'])
         self.request.user.account.save(update_fields=['balance'])
+
+        # Send email to sender
+        send_transaction_email(
+            self.request.user, amount, "Transaction Confirmation", "transactions/sender_email.html")
+
+        # Send email to receiver
+        send_transaction_email(receiver_account.user, amount,
+                               "Transaction Received", "transactions/receiver_email.html")
 
         messages.success(
             self.request,
