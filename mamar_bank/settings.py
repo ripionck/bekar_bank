@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import environ
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,17 +92,26 @@ WSGI_APPLICATION = 'mamar_bank.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env("DB_NAME"),
+#         'USER': env("DB_USER"),
+#         'PASSWORD': env("DB_PASSWORD"),
+#         'HOST': env("DB_HOST"),
+#         'PORT': env("DB_PORT"),
+#     }
+# }
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
-    }
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgres://mamar_bank_mq2t_user:kRo3jTmNBXgefHoBYByw2LbslxUzHFb3@dpg-cm7vpr6n7f5s73ceah6g-a.oregon-postgres.render.com/mamar_bank_mq2t',
+        conn_max_age=600
+    )
 }
-# postgres://mamar_bank_mq2t_user:kRo3jTmNBXgefHoBYByw2LbslxUzHFb3@dpg-cm7vpr6n7f5s73ceah6g-a.oregon-postgres.render.com/mamar_bank_mq2t
+#
 
 
 # Password validation
