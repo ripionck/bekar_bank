@@ -216,10 +216,12 @@ class TransferMoneyView(TransactionCreateMixin):
         amount = form.cleaned_data.get('amount')
         receiver_account = UserBankAccount.objects.get(
             account_no=form.cleaned_data.get('account_no'))
+
         # Update the balances of the sender and receiver accounts.
         self.request.user.account.balance -= amount
         receiver_account.balance += amount
         print(receiver_account.account_no)
+
         # Save the updated balances to the database.
         receiver_account.save(update_fields=['balance'])
         self.request.user.account.save(update_fields=['balance'])
