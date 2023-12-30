@@ -101,6 +101,7 @@ DATABASES = {
         'PORT': env("DB_PORT"),
     }
 }
+# postgres://mamar_bank_mq2t_user:kRo3jTmNBXgefHoBYByw2LbslxUzHFb3@dpg-cm7vpr6n7f5s73ceah6g-a.oregon-postgres.render.com/mamar_bank_mq2t
 
 
 # Password validation
